@@ -6,7 +6,7 @@ body {
 }
 
 .card {
-    position: relatve;
+    position: relative;
     width: 300px;
     height: 425px;
     border: 10px solid black;
