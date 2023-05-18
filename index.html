@@ -32,58 +32,74 @@
         <div class="back"></div>
         <div class="front">
             <div class="imgset">
-                <img src="https://i.ibb.co/qsTsqMd/Juicy-Luicy.png" alt="Juicy-Luicy" border="0">
+                <img src="https://i.ibb.co/7Qsgpsx/Juicy-Luicy-1.png" alt="Juicy-Luicy" border="0">
             </div>
         </div>
         <div class="text-container">
             <p style="font-style: normal;
             text-decoration: underline;">For Nisrina Ishmah Mahira</p>
-            <p id="head" style="font-style: normal; font-weight:bold">Good Luck!!!</p>
-            <p>Semangat bro utsnya! mari kita bertempur dengan buku 2 minggu kedepan, jangan mageran yak, pokoknya harus
-                semangat.
+            <p id="head" style="font-style: normal; font-weight:bold">Selamat Ulang Tahun!!!</p>
+            <p>
+                Uy nis, di usia yg semakin bertambah dewasa ini, semoga kamu semakin dekat dengan Allah yaa, semakin
+                taat
+                dalam menjalankan ibadah, dan semakin istiqomah dalam menghadapi segala ujian dan cobaan hidup:)
             </p>
-            <p style="font-style: normal;">Semoga dapet hasil yang memuaskan!</p>
+            <p style="font-style: normal;">Sekali lagi HBD, semoga selalu dalam lindungan dan kasih sayang Allah.
+                SWT.
+            </p>
         </div>
     </div>
+
+    <div class="button-container">
+        <a href="https://open.spotify.com/playlist/4FLzg0lPmXSZ1MWRLnL29J?si=YBPsPirrTWyWl4ZhgYKZlA&pt=22e69f9ba6b92b1ccce97bfd711a6783"
+            class="button">Nis, Klik ini nis</a>
+    </div>
+
 
 </body>
 <script>
     $(document).ready(function () {
 
         var isCountdownFinished = false;
-        var countdownTime = 10; // 10 seconds
+        var countdownEndDate = new Date('May 19, 2023 12:00:00').getTime();
 
         // Function to start the countdown
         function startCountdown() {
             var countdownInterval = setInterval(function () {
-                countdownTime--;
+                var now = new Date().getTime();
+                var distance = countdownEndDate - now;
 
-                if (countdownTime <= 0) {
+                if (distance <= 0) {
                     clearInterval(countdownInterval);
                     isCountdownFinished = true;
                     runCode();
-                }
+                } else {
+                    var hours = Math.floor(distance / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                updateCountdownDisplay();
+                    updateCountdownDisplay(hours, minutes, seconds);
+                }
             }, 1000); // Update countdown every second
         }
 
-        // Function to update the countdown display
-        function updateCountdownDisplay() {
-            var seconds = countdownTime;
-
-            // Add leading zero if necessary
+        function updateCountdownDisplay(hours, minutes, seconds) {
+            hours = hours.toString().padStart(2, '0');
+            minutes = minutes.toString().padStart(2, '0');
             seconds = seconds.toString().padStart(2, '0');
 
-            // Update countdown value in the HTML
+            // Update countdown values in the HTML
+            $('#hours').text(hours);
+            $('#minutes').text(minutes);
             $('#seconds').text(seconds);
         }
-
 
         // Function to run the code
         function runCode() {
             if (isCountdownFinished) {
                 $('.card').css('display', 'block');
+                $('.button-container').css('display', 'flex',);
+
                 var isClicked = false;
                 $('.card').click(function () {
                     if (!isClicked) {
@@ -123,6 +139,7 @@
 
         // Hide the card initially
         $('.card').css('display', 'none');
+        $('.button-container').css('display', 'none');
 
         startCountdown();
     });
