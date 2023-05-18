@@ -13,6 +13,21 @@
 </head>
 
 <body>
+    <div id="countdown">
+        <div class="countdown-item">
+            <span class="countdown-value" id="hours">00</span>
+            <span class="countdown-label">Jam</span>
+        </div>
+        <div class="countdown-item">
+            <span class="countdown-value" id="minutes">00</span>
+            <span class="countdown-label">Menit</span>
+        </div>
+        <div class="countdown-item">
+            <span class="countdown-value" id="seconds">00</span>
+            <span class="countdown-label">Detik</span>
+        </div>
+    </div>
+
     <div class="card">
         <div class="back"></div>
         <div class="front">
@@ -33,36 +48,83 @@
 
 </body>
 <script>
-
     $(document).ready(function () {
-        var isClicked = false;
-        $('.card').click(function () {
-            if (!isClicked) {
-                $(this).find('.front').css({
-                    'transform': 'perspective(800px) rotateY(-170deg)',
-                    'background-color': '#41718d'
-                });
-                $(this).find('.back').css({
-                    'transform': 'perspective(800px) rotateY(-170deg)',
-                    'box-shadow': '7px 0px 5px 0px rgba(0, 0, 0, 0.3), inset 2px 0px 15px 0px rgba(0, 0, 0, 0.1)',
-                    'background-color': '#d2dcd2'
-                });
 
-                isClicked = true;
-            } else {
-                $(this).find('.front').css({
-                    'transform': 'perspective(800px) rotateY(0deg)',
-                    'background-color': '#d2dcd2'
+        var isCountdownFinished = false;
+        var countdownTime = 10; // 10 seconds
+
+        // Function to start the countdown
+        function startCountdown() {
+            var countdownInterval = setInterval(function () {
+                countdownTime--;
+
+                if (countdownTime <= 0) {
+                    clearInterval(countdownInterval);
+                    isCountdownFinished = true;
+                    runCode();
+                }
+
+                updateCountdownDisplay();
+            }, 1000); // Update countdown every second
+        }
+
+        // Function to update the countdown display
+        function updateCountdownDisplay() {
+            var seconds = countdownTime;
+
+            // Add leading zero if necessary
+            seconds = seconds.toString().padStart(2, '0');
+
+            // Update countdown value in the HTML
+            $('#seconds').text(seconds);
+        }
+
+
+        // Function to run the code
+        function runCode() {
+            if (isCountdownFinished) {
+                $('.card').css('display', 'block');
+                var isClicked = false;
+                $('.card').click(function () {
+                    if (!isClicked) {
+                        $(this).find('.front').css({
+                            'transform': 'perspective(800px) rotateY(-170deg)',
+                            'background-color': '#41718d'
+                        });
+                        $(this).find('.back').css({
+                            'transform': 'perspective(800px) rotateY(-170deg)',
+                            'box-shadow': '7px 0px 5px 0px rgba(0, 0, 0, 0.3), inset 2px 0px 15px 0px rgba(0, 0, 0, 0.1)',
+                            'background-color': '#d2dcd2'
+                        });
+
+                        isClicked = true;
+                    } else {
+                        $(this).find('.front').css({
+                            'transform': 'perspective(800px) rotateY(0deg)',
+                            'background-color': '#d2dcd2'
+                        });
+                        $(this).find('.back').css({
+                            'transform': 'perspective(800px) rotateY(0deg)',
+                            'box-shadow': '',
+                            'background-color': '#41718d'
+                        });
+                        isClicked = false;
+                    }
+
+
+
                 });
-                $(this).find('.back').css({
-                    'transform': 'perspective(800px) rotateY(0deg)',
-                    'box-shadow': '',
-                    'background-color': '#41718d'
-                });
-                isClicked = false;
+                $('.countdown-item').css('display', 'none');
+
+
+
             }
+        }
 
-        });
+        // Hide the card initially
+        $('.card').css('display', 'none');
+
+        startCountdown();
     });
 </script>
 
